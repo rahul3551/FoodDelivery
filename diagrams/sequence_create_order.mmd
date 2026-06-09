@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant User
+    participant CLI
+    participant OrderController
+    participant OrderService
+    participant CustomerService
+    participant RestaurantService
+    participant DiscountFactory
+    participant DeliveryFactory
+    participant OrderRepository
+    participant SQLiteDB
+
+    User->>CLI: choose Create Order
+    CLI->>OrderController: create_order()
+    OrderController->>OrderService: create_order(customer_id, restaurant_id, amount, distance, discount_type, delivery_type)
+    OrderService->>CustomerService: get_customer_by_id(customer_id)
+    CustomerService-->>OrderService: customer_row
+    OrderService->>RestaurantService: get_restaurant_by_id(restaurant_id)
+    RestaurantService-->>OrderService: restaurant_row
+    OrderService->>DiscountFactory: create(discount_type)
+    DiscountFactory-->>OrderService: DiscountStrategy
+    OrderService->>DeliveryFactory: create(delivery_type)
+    DeliveryFactory-->>OrderService: DeliveryStrategy
+    OrderService->>OrderRepository: create(order)
+    OrderRepository->>SQLiteDB: INSERT orders
+    SQLiteDB-->>OrderRepository: OK
+    OrderRepository-->>OrderService: persisted
+    OrderService-->>OrderController: Order object
+    OrderController-->>CLI: print success
+    CLI-->>User: Order created

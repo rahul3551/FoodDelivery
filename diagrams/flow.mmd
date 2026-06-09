@@ -1,0 +1,30 @@
+graph LR
+    CLI[CLI.menu]
+    CLI --> CC[CustomerController]
+    CLI --> RC[RestaurantController]
+    CLI --> OC[OrderController]
+
+    CC --> CS[CustomerService]
+    RC --> RS[RestaurantService]
+    OC --> OS[OrderService]
+
+    CS --> CR[CustomerRepository]
+    RS --> RR[RestaurantRepository]
+    OS --> OR[OrderRepository]
+
+    CR --> DB[SQLiteDatabase]
+    RR --> DB
+    OR --> DB
+
+    OS --> DF[DiscountFactory]
+    OS --> LF[DeliveryFactory]
+
+    DF --> DS[DiscountStrategies]
+    LF --> LS[DeliveryStrategies]
+
+    CS --> MCustomer[Customer model]
+    RS --> MRestaurant[Restaurant model]
+    OS --> MOrder[Order model]
+
+    OC --> DF
+    OC --> LF

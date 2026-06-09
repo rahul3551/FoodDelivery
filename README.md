@@ -1,54 +1,48 @@
-# Food Delivery Project — Flow Diagrams
+# Food Delivery
 
-This repository contains a simple Food Delivery application. Below are visual diagrams describing the control flow.
+Simple, modular Food Delivery example demonstrating SOLID principles.
 
-## Flow Diagram
+## Overview
 
-```mermaid
-graph LR
-    CLI[CLI.menu]
-    CLI --> CC[CustomerController]
-    CLI --> RC[RestaurantController]
-    CLI --> OC[OrderController]
+This project implements a small, console-based food delivery system with a clear separation of concerns across controllers, services, repositories, and a lightweight CLI.
 
-    CC --> CS[CustomerService]
-    RC --> RS[RestaurantService]
-    OC --> OS[OrderService]
+## Features
 
-    CS --> CR[CustomerRepository]
-    RS --> RR[RestaurantRepository]
-    OS --> OR[OrderRepository]
+- Customer, Restaurant and Order management
+- SQLite persistence (`food_delivery.db` included)
+- Pluggable strategies for delivery and discounts
 
-    CR --> DB[SQLiteDatabase]
-    RR --> DB
-    OR --> DB
+## Quickstart
 
-    OS --> DF[DiscountFactory]
-    OS --> LF[DeliveryFactory]
+1. Create and activate a virtual environment (Windows PowerShell):
 
-    DF --> DS[DiscountStrategies]
-    LF --> LS[DeliveryStrategies]
-
-    CS --> MCustomer[Customer model]
-    RS --> MRestaurant[Restaurant model]
-    OS --> MOrder[Order model]
-
-    OC --> DF
-    OC --> LF
+```powershell
+python -m venv .venv
+& .venv\Scripts\Activate.ps1
 ```
 
-## Sequence Diagram — Create Order
+2. Run the app:
 
-See `diagrams/sequence_create_order.mmd` for the sequence diagram showing the Create Order interaction.
-
-## Generating PNGs (optional)
-
-Install `mermaid-cli` and generate PNGs locally:
-
-```bash
-npm install -g @mermaid-js/mermaid-cli
-mmdc -i diagrams/flow.mmd -o diagrams/flow.png
-mmdc -i diagrams/sequence_create_order.mmd -o diagrams/sequence_create_order.png
+```powershell
+python main.py
 ```
 
-Or tell me and I can try to render PNGs here if permitted.
+The CLI will present a menu to interact with customers, restaurants and orders.
+
+## Project Structure
+
+- `main.py` — application entrypoint
+- `app.py` — small App wrapper that runs the CLI
+- `cli/` — command-line interface
+- `controllers/`, `services/`, `repositories/` — core layered architecture
+- `database/` — SQLite database adapter
+- `models/`, `factories/`, `strategies/`, `utils/` — supporting modules
+
+## Notes
+
+- The project uses a local SQLite file `food_delivery.db` in the project root.
+- There is no external dependency manifest; add requirements as needed.
+
+## License
+
+Open for educational use.
